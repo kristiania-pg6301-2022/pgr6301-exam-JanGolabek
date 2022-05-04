@@ -50,3 +50,4 @@ Dette er versjonene vi brukte under forelesningene om som er validert som ok:
 * [ ] Jest med dokumentert testdekning
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
  
+test
