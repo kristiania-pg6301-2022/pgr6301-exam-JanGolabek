@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { fetchJSON } from "../lib/fetchJSON";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { ArticlesApiContext } from "../articlesApiContext";
 
-export function LoginPage() {
+export function LoginCallback() {
+    const navigate = useNavigate();
+    const { registerLogin } = useContext(ArticlesApiContext);
+    useEffect(async () => {
+        const { access_token } = Object.fromEntries(
+            new URLSearchParams(window.location.hash.substring(1))
+        );
+        await registerLogin({ access_token });
+        navigate("/");
+    });
+    return <h1>Please wait...</h1>;
+}
+
+
+function StartLogin() {
     async function handleLoginWithGoogle() {
         const { authorization_endpoint } = await fetchJSON(
             "https://accounts.google.com/.well-known/openid-configuration"
@@ -24,5 +40,14 @@ export function LoginPage() {
             <h1>Login</h1>
             <button onClick={handleLoginWithGoogle}>Login with Google</button>
         </div>
+    );
+}
+export function LoginPage() {
+    return (
+        <Routes>
+            <Route path={"/"} element={<StartLogin />} />
+            <Route path={"/callback"} element={<LoginCallback />} />
+            <Route path={"*"} element={<StartLogin />} />
+        </Routes>
     );
 }
