@@ -11,8 +11,15 @@ export function ArticlesApi(mongoDatabase) {
         res.json(articles);
     });
 
-    router.post("/new", (req, res) => {
-        res.sendStatus(500);
+    router.post("/", (req, res) => {
+        const { category, title, text, author } = req.body;
+        const result = mongoDatabase.collection("articlesDb").insertOne({
+            category,
+            title,
+            text,
+            author
+        });
+        res.sendStatus(200);
     });
 
     return router;

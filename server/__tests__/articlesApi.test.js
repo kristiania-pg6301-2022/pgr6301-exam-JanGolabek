@@ -3,23 +3,42 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import { ArticlesApi } from "../articlesApi";
 import dotenv from "dotenv";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
 const app = express();
+app.use(bodyParser.json());
 
+const mongoClient = new MongoClient(process.env.MONGODB_URL);
 beforeAll(async () => {
-    const mongoClient = new MongoClient(process.env.MONGODB_URL);
     await mongoClient.connect();
-    app.use("/api/articles", ArticlesApi(mongoClient.db("articlesExam")));
+    const database = mongoClient.db("test_database");
+    await database.collection("test_db").deleteMany({});
+    app.use("/api/articles", ArticlesApi(database));
+});
+
+afterAll(() => {
+    mongoClient.close();
 });
 
 describe("articles api", () => {
-    it("lists existing articles", async () => {
+    it("adds a new movie", async () => {
+        const category = "test category"
+        const title = "test title"
+        const author = "test author"
+        const text = "test text"
+        await request(app)
+            .post("/api/articles")
+            .send({
+             category, title, author, text
+            })
+            .expect(200);
         expect(
             (await request(app).get("/api/articles").expect(200)).body.map(
                 ({ title }) => title
             )
-        ).toContain("Cristo Ronaldo");
+        ).toContain(title);
     });
+
 });
