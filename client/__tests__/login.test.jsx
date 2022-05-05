@@ -14,7 +14,9 @@ describe("login page", () => {
         window.location = new URL(location);
 
         const authorization_endpoint = `https://foo.example.com/auth`;
-        global.fetch = async () => ({
+        const client_id = `1095582733852-smqnbrhcoiasjjg8q28u0g1k3nu997b0.apps.googleusercontent.com`;
+
+            global.fetch = async () => ({
             ok: true,
             json: () => ({ authorization_endpoint }),
         });
@@ -22,14 +24,19 @@ describe("login page", () => {
         const domElement = document.createElement("div");
             ReactDOM.render(
                 <MemoryRouter>
-                    <LoginPage />
+                    <LoginPage
+                        config={{
+                            discovery_endpoint:
+                                "https://example.com/.well-known/openid-configuration",
+                            client_id,
+                        }}
+                    />
                 </MemoryRouter>,
                 domElement
             );
         await act(async () => {
             await Simulate.click(domElement.querySelector("button"));
         });
-        const client_id = `1095582733852-smqnbrhcoiasjjg8q28u0g1k3nu997b0.apps.googleusercontent.com`;
         const redirect_uri = encodeURIComponent(
             `${location.origin}/login/callback`
         );
@@ -48,11 +55,13 @@ describe("login page", () => {
 
             const domElement = document.createElement("div");
             const registerLogin = jest.fn();
+            const reload = jest.fn();
+
             act(() => {
                 ReactDOM.render(
                     <MemoryRouter>
                         <ArticlesApiContext.Provider value={{ registerLogin }}>
-                            <LoginCallback />
+                            <LoginCallback reload={reload} />
                         </ArticlesApiContext.Provider>
                     </MemoryRouter>,
                     domElement

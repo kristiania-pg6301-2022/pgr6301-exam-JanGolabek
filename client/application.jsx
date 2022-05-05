@@ -11,7 +11,7 @@ import { ArticlesApiContext } from "./articlesApiContext";
 
 export function Application() {
     const { fetchLogin } = useContext(ArticlesApiContext);
-    const { data, error, loading } = useLoading(fetchLogin);
+    const { data, error, loading, reload } = useLoading(fetchLogin);
 
     if (error) {
         return <div>Error: {error.toString()}</div>;
@@ -32,13 +32,17 @@ export function Application() {
                 ) : (
                     <Link to={"/login"}>Login</Link>
                 )}
+                {data?.user && <Link to={"/login/endsession"}>Log out</Link>}
             </header>
             <main>
                 <Routes>
                     <Route path={"/"} element={<FrontPage />} />
                     <Route path={"/articles"} element={<ListArticles />} />
                     <Route path={"/articles/new"} element={<AddNewArticle />} />
-                    <Route path={"/login/*"} element={<LoginPage />} />
+                    <Route
+                        path={"/login/*"}
+                        element={<LoginPage config={data.config} reload={reload} />}
+                    />
                     <Route path={"*"} element={<h1>Not found</h1>} />
                 </Routes>
             </main>

@@ -1,9 +1,6 @@
 import express from "express";
 import fetch from "node-fetch";
 
-const discovery_endpoint =
-    "https://accounts.google.com/.well-known/openid-configuration";
-
 async function fetchJSON(url, options) {
     const res = await fetch(url, options);
     if (!res.ok) {
@@ -13,12 +10,21 @@ async function fetchJSON(url, options) {
 }
 
 export function LoginApi() {
+
+    const discovery_endpoint =
+        "https://accounts.google.com/.well-known/openid-configuration";
+    const client_id = process.env.CLIENT_ID;
+
     const router = new express.Router();
 
     router.get("/", async (req, res) => {
         const { access_token } = req.signedCookies;
-        const response = {};
-        if (access_token) {
+        const response = {
+            config: {
+                discovery_endpoint,
+                client_id,
+            },
+        };        if (access_token) {
             const { userinfo_endpoint } = await fetchJSON(discovery_endpoint);
             const userinfo = await fetch(userinfo_endpoint, {
                 headers: {
@@ -30,6 +36,11 @@ export function LoginApi() {
             }
         }
         res.json(response);
+    });
+
+    router.delete("/", (req, res) => {
+        res.clearCookie("access_token");
+        res.sendStatus(200);
     });
 
     router.post("/", (req, res) => {
