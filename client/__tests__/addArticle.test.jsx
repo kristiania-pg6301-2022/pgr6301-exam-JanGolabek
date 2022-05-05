@@ -1,4 +1,4 @@
-import { AddNewArticle } from "../addNewArticle";
+import { AddNewArticle } from "../pages/addNewArticle";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
