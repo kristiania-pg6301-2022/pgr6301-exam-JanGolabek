@@ -1,15 +1,16 @@
 import React from "react";
 import { useLoading } from "./useLoading";
 
-function ArticleCard({ article: { category, title, text, author } }) {
+function ArticleCard({ article: { category, title, author, text } }) {
     return (
         <>
             <p>{category}</p>
             <h2>{title}</h2>
-            <p>{text}</p>
             <p>
                 <i>Written by: {author}</i>
             </p>
+            <p>{text}</p>
+
         </>
     );
 }

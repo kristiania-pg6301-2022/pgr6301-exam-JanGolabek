@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { ListArticles } from "./listArticles";
+import { AddNewArticle } from "./addNewArticle";
+
 
 function FrontPage() {
     return (
@@ -25,14 +27,6 @@ async function fetchJSON(url) {
         throw new Error(`Failed to load ${res.status}: ${res.statusText}`);
     }
     return await res.json();
-}
-
-function AddNewArticle() {
-    return (
-        <form>
-            <h1>Add new article</h1>
-        </form>
-    );
 }
 
 function Application() {

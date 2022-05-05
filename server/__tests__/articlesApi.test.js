@@ -26,12 +26,12 @@ describe("articles api", () => {
     it("adds a new movie", async () => {
         const category = "test category"
         const title = "test title"
-        const author = "test author"
         const text = "test text"
+        const author = "test author"
         await request(app)
             .post("/api/articles")
             .send({
-             category, title, author, text
+             category, title, text, author
             })
             .expect(200);
         expect(
