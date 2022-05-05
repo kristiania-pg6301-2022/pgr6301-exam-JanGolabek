@@ -4,10 +4,10 @@ import { ListArticles } from "./pages/listArticles";
 import { AddNewArticle } from "./pages/addNewArticle";
 import React from "react";
 import "./application.css";
+import { LoginPage } from "./pages/loginPage";
 
 
 export function Application() {
-
 
     return (
         <BrowserRouter>
@@ -22,6 +22,8 @@ export function Application() {
                     <Route path={"/"} element={<FrontPage />} />
                     <Route path={"/articles"} element={<ListArticles />} />
                     <Route path={"/articles/new"} element={<AddNewArticle />} />
+                    <Route path={"/login/*"} element={<LoginPage />} />
+                    <Route path={"*"} element={<h1>Not found</h1>} />
                 </Routes>
             </main>
         </BrowserRouter>
