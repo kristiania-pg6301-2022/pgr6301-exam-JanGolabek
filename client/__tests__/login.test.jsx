@@ -1,7 +1,7 @@
 import { act, Simulate } from "react-dom/test-utils";
 import ReactDOM from "react-dom";
 import React from "react";
-import { LoginCallback, LoginPage } from "../pages/loginPage";
+import { LoginPage } from "../pages/loginPage";
 import {ArticlesApiContext} from "../articlesApiContext";
 import { MemoryRouter } from "react-router-dom";
 
@@ -31,7 +31,7 @@ describe("login page", () => {
             await Simulate.click(domElement.querySelector("button"));
         });
         const redirect_uri = encodeURIComponent(
-            `${location.origin}/login/callback`
+            `${location.origin}/login/google/callback`
         );
         expect(window.location.href).toEqual(
             `${authorization_endpoint}?response_type=token&client_id=${client_id}&scope=email+profile&redirect_uri=${redirect_uri}`
@@ -52,14 +52,14 @@ describe("login page", () => {
 
             act(() => {
                 ReactDOM.render(
-                    <MemoryRouter>
+                    <MemoryRouter initialEntries={["/google/callback"]}>
                         <ArticlesApiContext.Provider value={{ registerLogin }}>
-                            <LoginCallback reload={reload} />
+                            <LoginPage reload={reload} />
                         </ArticlesApiContext.Provider>
                     </MemoryRouter>,
                     domElement
                 );
             });
-            expect(registerLogin).toBeCalledWith({ access_token });
+            expect(registerLogin).toBeCalledWith("google", { access_token });
         });
 });

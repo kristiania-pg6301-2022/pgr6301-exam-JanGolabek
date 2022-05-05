@@ -12,8 +12,8 @@ export const ArticlesApiContext = React.createContext({
     async createArticle(article) {
         return await postJSON("/api/articles", article);
     },
-    async registerLogin(login) {
-        return await postJSON("/api/login", login);
+    async registerLogin(provider, login) {
+        return await postJSON(`/api/login/${provider}`, login);
     },
     async endSession() {
         const res = await fetch("/api/login", { method: "DELETE" });

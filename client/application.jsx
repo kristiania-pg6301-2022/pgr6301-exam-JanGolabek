@@ -7,6 +7,22 @@ import "./application.css";
 import { LoginPage } from "./pages/loginPage";
 import { useLoading } from "./useLoading";
 import { ArticlesApiContext } from "./articlesApiContext";
+import { Profile } from "./pages/profile";
+
+function UserActions({ user }) {
+    if (!user || Object.keys(user).length === 0) {
+        return <Link to={"/login"}>Login</Link>;
+    }
+
+    return (
+        <>
+            <Link to={"/profile"}>
+                {user.google.name ? `Profile for ${user.google.name}` : "Profile"}
+            </Link>
+            <Link to={"/login/endsession"}>Log out</Link>
+        </>
+    );
+}
 
 
 export function Application() {
@@ -27,12 +43,7 @@ export function Application() {
                 <Link to={"/"}>Front page</Link>
                 <Link to={"/articles"}>Articles</Link>
                 <div className="menu-divider" />
-                {data?.user ? (
-                    <Link to={"/profile"}>Profile for {data.user.name}</Link>
-                ) : (
-                    <Link to={"/login"}>Login</Link>
-                )}
-                {data?.user && <Link to={"/login/endsession"}>Log out</Link>}
+                <UserActions user={data?.user} />
             </header>
             <main>
                 <Routes>
@@ -43,6 +54,7 @@ export function Application() {
                         path={"/login/*"}
                         element={<LoginPage config={data.config} reload={reload} />}
                     />
+                    <Route path={"/profile"} element={<Profile user={data?.user} />} />
                     <Route path={"*"} element={<h1>Not found</h1>} />
                 </Routes>
             </main>
