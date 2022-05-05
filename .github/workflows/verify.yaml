@@ -7,6 +7,7 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -19,3 +20,9 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           working-directory: client
+      - name: Collect coverage from server
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          working-directory: server
+        env:
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
