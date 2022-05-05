@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLoading } from "../useLoading";
+import { ArticlesApiContext } from "../articlesApiContext";
 
 function ArticleCard({ article: { category, title, author, text } }) {
     return (
@@ -14,7 +15,8 @@ function ArticleCard({ article: { category, title, author, text } }) {
         </>
     );
 }
-export function ListArticles({ listArticles }) {
+export function ListArticles() {
+    const { listArticles } = useContext(ArticlesApiContext);
     const { loading, error, data } = useLoading(listArticles);
 
     if (loading) {

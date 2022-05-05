@@ -3,15 +3,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Simulate } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
+import { ArticlesApiContext } from "../articlesApiContext";
+
 
 
 describe("add article component", () => {
     it("shows article form", () => {
         const element = document.createElement("div");
         ReactDOM.render(
-            <MemoryRouter>
-                <AddNewArticle />
-            </MemoryRouter>,
+                <MemoryRouter>
+                    <AddNewArticle />
+                </MemoryRouter>,
             element
         );
         expect(element.innerHTML).toMatchSnapshot();
@@ -26,9 +28,11 @@ describe("add article component", () => {
         const category = "Test category";
         const element = document.createElement("div");
         ReactDOM.render(
-            <MemoryRouter>
-                <AddNewArticle createArticle={createArticle} />
-            </MemoryRouter>,
+            <ArticlesApiContext.Provider value={{ createArticle }}>
+                <MemoryRouter>
+                    <AddNewArticle />
+                </MemoryRouter>
+            </ArticlesApiContext.Provider>,
             element
         );
         Simulate.change(element.querySelector(".form-input input"), {

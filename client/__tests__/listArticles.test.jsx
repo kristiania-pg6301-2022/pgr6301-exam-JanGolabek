@@ -2,6 +2,8 @@ import { ListArticles } from "../pages/listArticles";
 import React from "react";
 import ReactDOM from "react-dom";
 import {act} from "react-dom/test-utils";
+import { ArticlesApiContext } from "../articlesApiContext";
+
 
 describe("ListArticles component", () => {
     it("shows loading screen", () => {
@@ -14,7 +16,12 @@ describe("ListArticles component", () => {
         const articles = [{ title: "article 1" }, { title: "article 2" }];
         const domElement = document.createElement("div");
         await act(async () => {
-            ReactDOM.render(<ListArticles listArticles={() => articles} />, domElement);
+            ReactDOM.render(
+                <ArticlesApiContext.Provider value={{ listArticles: () => articles }}>
+                    <ListArticles />
+                </ArticlesApiContext.Provider>,
+                domElement
+            );
         });
 
         expect(
@@ -27,12 +34,13 @@ describe("ListArticles component", () => {
     it("shows error message", async () => {
         const domElement = document.createElement("div");
         await act(async () => {
+            const listArticles = () => {
+                throw new Error("Something went wrong");
+            };
             ReactDOM.render(
-                <ListArticles
-                    listArticles={() => {
-                        throw new Error("Something went wrong");
-                    }}
-                />,
+                <ArticlesApiContext.Provider value={{ listArticles }}>
+                    <ListArticles />
+                </ArticlesApiContext.Provider>,
                 domElement
             );
         });

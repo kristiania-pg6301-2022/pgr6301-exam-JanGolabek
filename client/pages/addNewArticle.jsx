@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext,useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormInput } from "../lib/formInput";
+import {ArticlesApiContext} from "../articlesApiContext";
 
-
-export function AddNewArticle({ createArticle}) {
+export function AddNewArticle() {
+    const { createArticle } = useContext(ArticlesApiContext);
     const [category, setCategory] = useState("");
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
@@ -16,7 +17,6 @@ export function AddNewArticle({ createArticle}) {
         createArticle({ category, title, author, text });
         navigate("/");
     }
-
 
     return (
         <form onSubmit={handleSubmit}>
