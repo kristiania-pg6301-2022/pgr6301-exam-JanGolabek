@@ -24,6 +24,7 @@ export function ListArticles({ listArticles }) {
             <div>
                 <h1>Error</h1>
                 <div>{error.toString()}</div>
+                <div id="error-text">{error.toString()}</div>
             </div>
         );
     }
