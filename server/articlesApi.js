@@ -1,18 +1,13 @@
 import { Router } from "express";
 
-const articles = [
-    {
-        title: "Article 1",
-    },
-    {
-        title: "Article 2",
-    },
-];
-
-export function ArticlesApi() {
+export function ArticlesApi(mongoDatabase) {
     const router = new Router();
 
-    router.get("/", (req, res) => {
+    router.get("/", async (req, res) => {
+        const articles = await mongoDatabase
+            .collection("articlesDb")
+            .find()
+            .toArray();
         res.json(articles);
     });
 

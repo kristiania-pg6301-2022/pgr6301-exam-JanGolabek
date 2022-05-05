@@ -1,12 +1,20 @@
 import express from "express";
 import * as path from "path";
 import { ArticlesApi } from "./articlesApi.js";
+import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
-app.use(express.static("../client/dist/"));
-app.use("/api/articles", ArticlesApi());
+const mongoClient = new MongoClient(process.env.MONGODB_URL);
+mongoClient.connect().then(async () => {
+    console.log("Connected to mongodb");
+    app.use("/api/articles", ArticlesApi(mongoClient.db("articlesExam")));
+});
 
+app.use(express.static("../client/dist/"));
 
 app.use((req, res, next) => {
     if (req.method === "GET" && !req.path.startsWith("/api")) {
