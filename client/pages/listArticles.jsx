@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useLoading } from "../useLoading";
 import { ArticlesApiContext } from "../articlesApiContext";
 
@@ -17,7 +17,17 @@ function ArticleCard({ article: { category, title, author, text } }) {
 }
 export function ListArticles() {
     const { listArticles } = useContext(ArticlesApiContext);
-    const { loading, error, data } = useLoading(listArticles);
+    const [category, setCategory] = useState(undefined);
+    const [categoryQuery, setCategoryQuery] = useState("");
+    const { loading, error, data } = useLoading(
+        async () => await listArticles({ category }),
+        [category]
+    );
+
+    function handleSubmitQuery(e) {
+        e.preventDefault();
+        setCategory(categoryQuery);
+    }
 
     if (loading) {
         return <div>Loading...</div>;
@@ -33,7 +43,22 @@ export function ListArticles() {
     }
     return (
         <div>
-            <h1>Article in the database</h1>
+            <h1>Articles in the database</h1>
+
+            <div>
+                <form onSubmit={handleSubmitQuery}>
+                    <label>
+                        Category:
+                        <input
+                            id="category-query"
+                            value={categoryQuery}
+                            onChange={(e) => setCategoryQuery(e.target.value)}
+                        />
+                        <button>Filter</button>
+                    </label>
+                </form>
+            </div>
+
             {data.map((article) => (
                 <ArticleCard key={article.title} article={article} />
             ))}

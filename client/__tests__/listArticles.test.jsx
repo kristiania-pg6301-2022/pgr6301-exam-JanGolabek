@@ -1,7 +1,7 @@
 import { ListArticles } from "../pages/listArticles";
 import React from "react";
 import ReactDOM from "react-dom";
-import {act} from "react-dom/test-utils";
+import { act, Simulate } from "react-dom/test-utils";
 import { ArticlesApiContext } from "../articlesApiContext";
 
 
@@ -29,6 +29,28 @@ describe("ListArticles component", () => {
         ).toEqual(["article 1", "article 2"]);
 
         expect(domElement.innerHTML).toMatchSnapshot();
+    });
+
+    it("queries by category", async () => {
+        const domElement = document.createElement("div");
+        const listArticles = jest.fn(() => []);
+        await act(async () => {
+            ReactDOM.render(
+                <ArticlesApiContext.Provider value={{ listArticles }}>
+                    <ListArticles />
+                </ArticlesApiContext.Provider>,
+                domElement
+            );
+        });
+        Simulate.change(domElement.querySelector("#category-query"), {
+            target: { value: "Politics" },
+        });
+        await act(async () => {
+            await Simulate.submit(domElement.querySelector("form"));
+        });
+        expect(listArticles).toHaveBeenCalledWith({
+            category: "Politics",
+        });
     });
 
     it("shows error message", async () => {
