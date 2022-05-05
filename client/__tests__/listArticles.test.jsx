@@ -17,6 +17,11 @@ describe("ListArticles component", () => {
         await act(async () => {
             ReactDOM.render(<ListArticles listArticles={() => articles} />, domElement);
         });
+
+        expect(
+            Array.from(domElement.querySelectorAll("h2")).map((e) => e.innerHTML)
+        ).toEqual(["article 1", "article 2"]);
+
         expect(domElement.innerHTML).toMatchSnapshot();
     });
 });
