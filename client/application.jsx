@@ -21,11 +21,11 @@ export function Application() {
                 <Route path={"/"} element={<FrontPage />} />
                 <Route
                     path={"/articles"}
-                    element={<ListArticles listArticles={listArticles()} />}
+                    element={<ListArticles listArticles={listArticles} />}
                 />
                 <Route
                     path={"/articles/new"}
-                    element={<AddNewArticle createArticle={createArticle()} />}
+                    element={<AddNewArticle createArticle={createArticle} />}
                 />
             </Routes>
         </BrowserRouter>
