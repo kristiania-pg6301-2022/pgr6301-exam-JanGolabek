@@ -11,7 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^28.0.3",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "jest": "^27.5.1",
+    "jest-babel": "^1.0.1",
     "parcel": "^2.5.0"
   },
   "dependencies": {
@@ -19,5 +22,14 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   }
 }
