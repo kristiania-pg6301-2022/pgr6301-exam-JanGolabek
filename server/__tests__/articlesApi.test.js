@@ -23,7 +23,7 @@ afterAll(() => {
 });
 
 describe("articles api", () => {
-    it("adds a new movie", async () => {
+    it("adds a new article", async () => {
         const category = "test category"
         const title = "test title"
         const text = "test text"
@@ -35,9 +35,8 @@ describe("articles api", () => {
             })
             .expect(200);
         expect(
-            (await request(app).get("/api/articles").expect(200)).body.map(
-                ({ title }) => title
-            )
+            (await request(app).get("/api/articles").query({ category }).expect(200)
+            ).body.map(({ title }) => title)
         ).toContain(title);
     });
 
