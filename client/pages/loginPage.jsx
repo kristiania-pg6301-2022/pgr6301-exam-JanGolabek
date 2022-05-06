@@ -11,6 +11,7 @@ export function LoginCallback({ reload, config }) {
         const { access_token } = Object.fromEntries(
             new URLSearchParams(window.location.hash.substring(1))
         );
+
         if (!access_token) {
             setError("Missing access_token");
             return;
@@ -19,16 +20,17 @@ export function LoginCallback({ reload, config }) {
         await registerLogin(provider, { access_token });
         reload();
         navigate("/");
-        if (error) {
-            return (
-                <div>
-                    <h1>Error</h1>
-                    <div>{error.toString()}</div>
-                </div>
-            );
-        }
-
     });
+
+    if (error) {
+        return (
+            <div>
+                <h1>Error</h1>
+                <div>{error.toString()}</div>
+            </div>
+        );
+    }
+
     return <h1>Please wait...</h1>;
 }
 
@@ -43,8 +45,6 @@ export function EndSession({ reload }) {
     return <h1>Please wait...</h1>;
 }
 
-
-
 function LoginButton({ config, label, provider }) {
     async function handleLogin() {
         const { authorization_endpoint, client_id } = config[provider];
@@ -58,6 +58,7 @@ function LoginButton({ config, label, provider }) {
         window.location.href =
             authorization_endpoint + "?" + new URLSearchParams(parameters);
     }
+
     return (
         <div>
             <button onClick={handleLogin}>{label}</button>
@@ -66,18 +67,18 @@ function LoginButton({ config, label, provider }) {
 }
 
 function StartLogin({ config }) {
-
     return (
         <div>
             <h1>Login</h1>
             <LoginButton
-                label={"Login with Google"}
+                label={"Login with Gooogle"}
                 config={config}
                 provider={"google"}
             />
         </div>
     );
 }
+
 export function LoginPage({ config, reload }) {
     return (
         <Routes>
