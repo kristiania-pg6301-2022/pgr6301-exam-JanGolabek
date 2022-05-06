@@ -1,7 +1,8 @@
 # PG6301 eksamen <tittel på løsningen>
+https://github.com/kristiania-pg6301-2022/pgr6301-exam-JanGolabek.git
 
-[Heroku](link til heroku)
-[Test rapport](link til testrapport)
+[Heroku](https://article-app-exam-pg6301.herokuapp.com/)
+[Test rapport](https://github.com/kristiania-pg6301-2022/pgr6301-exam-JanGolabek/commit/9363a483fdace93d2daee4f83da5bd9a6b6c7a5d#commitcomment-72980642)
 
 ## Tips
 
@@ -24,29 +25,42 @@ Dette er versjonene vi brukte under forelesningene om som er validert som ok:
 
 ## Egenutfylling av funksjonelle krav
 
-* [ ] *legg inn krav fra eksamentekst*
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] *legg inn krav fra eksamentekst*
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
+* [x] *Brukere kan logge seg inn. Det anbefales at du implementerer at brukerne logger seg inn med Google, men andre
+mekanismer er også akseptabelt*
+  * *Alt ok*
+* [x] *Anonyme brukere skal se nyhetsaker når de kommer til nettsiden. Legg inn noen nyhetssaker for å demonstrere
+  * *Alle artiklene er listet i articles*
+* [x] *Når en ny sak publiseres, skal alle brukerne få se den nye saken umiddelbart. Bruk websockets for å sende oppdateringer*
+  * *Alle artiklene er listet i articles. Websockets fikk jeg ikke tid til å implementere.*
+* [x] * Brukere skal forbli logget inn når de refresher websiden*
+  * *alt ok*
+ * [x] * Redaksjonelle brukere kan publisere nye nyhetsartikler*
+  * *Ja og nei. Alle brukere kan publisere og artiklene blir lagret i databasen*
+ * [x] * Nyhetsartikkel skal inneholde en kategori valgt fra en nedtrekksliste ( <select> ), tittel ( <input> ) og tekst ( <textarea> )
+  * *De 3 kategoriene er der, i tillegg til author. Fikk dessverre ikke tid til å lage til nedtrekksliste etc. og gjøre den "skikkelig"*
+ * [x] * Alle feil fra serves skal presenteres til bruker på en pen måte, med mulighet for brukeren til å prøve igjen
+  * *Ikke alle men de fleste. Design og UX-messig er det ekstremt mye som mangler men jeg valgte å gå for det viktigste mtp tidsbruk og kunnskap*
+
 
 ## Egenutfylling av tekniske krav
 
-* [ ] Oppsett av package.json, parcel, express, prettier
+* [x] Oppsett av package.json, parcel, express, prettier
+  * *mangler prettier*
+* [x] React Router
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] React Router
+* [x] Express app
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Express app
+* [x] Kommunikasjon mellom frontend (React) og backend (Express)
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Kommunikasjon mellom frontend (React) og backend (Express)
+* [x] Deployment til Heroku
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Deployment til Heroku
+* [x] Bruk av MongoDB
   * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Bruk av MongoDB
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] OpenID Connect
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
+* [x] OpenID Connect
+  * **
 * [ ] Web Sockets
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
-* [ ] Jest med dokumentert testdekning
-  * *beskriv eventuelle mangler eller problemer for delvis uttelling*
+  * **
+* [x] Jest med dokumentert testdekning
+  * *De siste to commitsene lyste ikke grønt. Fikk heller ingen feilmelding. Det virer som om minuttene i Classroom er blitt brukt opp men er ikke sikker. Alle testene kjører, appen fungerer både lokalt og på heroku*
  
+test
